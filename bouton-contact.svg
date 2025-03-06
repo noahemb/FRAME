@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220.68 102.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #3d52d5;
+        font-family: Futura-Medium, Futura;
+        font-size: 22.02px;
+        font-weight: 500;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M.99,56.02C-6.27,42.44,27.93-2.44,59.54.1c15.17,1.22,17.65,12.38,39.47,15.79,11.85,1.85,21.94-.08,42.11-3.95,28.67-5.49,34.59-10.84,44.74-6.58,9.74,4.09,14.07,13.13,20.39,26.32,9.51,19.84,20.96,43.71,9.87,58.55-12.04,16.1-45.75,15.07-63.82,1.32-13.04-9.93-10.4-20.75-22.37-25-13.79-4.89-32.28,4.15-48.03,11.84-11.11,5.43-15.78,9.4-23.03,7.89-8.61-1.79-9.97-9.05-19.08-16.45C22.43,55.73,5.41,64.3.99,56.02Z"/>
+  <text class="cls-2" transform="translate(40.92 51.04)"><tspan x="0" y="0">Con</tspan><tspan class="cls-3" x="40.75" y="0">t</tspan><tspan x="46.96" y="0">ac</tspan><tspan class="cls-3" x="70.67" y="0">t</tspan><tspan x="76.88" y="0">ez-nous</tspan></text>
+</svg>

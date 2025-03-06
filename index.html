@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="icon" type="image/png" sizes="16x16" href="LOGO72ppp.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="LOGO72ppp.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="LOGO72ppp.png">
+  <link rel="apple-touch-icon" href="LOGO72ppp.png">
+  <link rel="manifest" href="site.webmanifest">
+    <!-- Lien vers les fichiers CSS de Slick -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+  <title>Frame</title>
+  <!-- Styles internes -->
+  <style>
+     /* Style du carrousel */
+     .center {
+      width: 80%;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .center img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Optionnel : ajouter un peu de style pour centrer le carrousel */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #152ebe;
+      padding: 50px 0;
+      text-align: center;
+    }
+    body {
+      background-color: #3D52D5;
+      overflow-x: hidden;
+    }
+    body {
+            margin: 0;
+            height: 500vh; /* Pour permettre le scroll */
+            transition: background-color 0.5s ease-in-out;
+        }
+    @layer utilities {
+      @keyframes scaleIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .animate-scaleIn {
+        animation: scaleIn 1.5s ease-out;
+      }
+    }
+
+    /* Bouton de fin */
+    #bouton-fin {
+      transition: transform 0.3s ease;
+    }
+
+    #bouton-fin:hover,
+    #bouton-fin:active {
+      transform: scale(1.1);
+    }
+
+    /* Container pour Shorts YouTube */
+    .shorts-container {
+      width: 371px;
+      height: 600px;
+      position: absolute;
+      overflow: hidden;
+      border: none;
+    }
+
+    .shorts-container iframe {
+      width: 90%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    #scene {
+      transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    }
+
+    .svg-button:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .parallax-svg {
+      transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+    }
+
+    #svg-scene1 {
+      transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+    }
+
+    #svg-scene2 {
+      transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+    }
+
+    #svg-scene3 {
+      transition: transform 0.2s ease-out;
+    }
+
+    /* Ajoutez ce CSS à votre balise de style existante */
+    .hover-letter {
+      display: inline-block;
+      transition: transform 0.6s ease;
+      /* Animation plus longue */
+      letter-spacing: -70px;
+      /* Réduit l'espacement entre les lettres */
+      text-decoration: none;
+      /* Évite que les liens aient un soulignement */
+    }
+
+    .hover-letter:hover {
+      transform: translateY(-40px);
+      /* Déplace chaque lettre vers le haut lors du survol */
+    }
+
+    .hover-letter:not(:hover) {
+      transition: transform 0.5s ease;
+      /* Transition rapide pour revenir à la position initiale */
+    }
+    
+    .contact-button {
+        background-color: #27ae60;
+        color: white;
+        padding: 15px 30px;
+        font-size: 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .contact-button:hover {
+        background-color: #2ecc71;
+        transform: scale(1.05);
+    }
+
+
+
+    .hover-letter:active {
+      transform: translateY(-40px);
+      /* Maintient la lettre en haut pendant l'activation */
+    }
+
+    /* Style de base pour l'effet de fuite du curseur */
+    .cursor-flee-svg {
+      position: absolute;
+      /* Les SVGs doivent être en position absolue pour être déplacés facilement */
+      transition: transform 0.1s ease-out;
+      /* Animation fluide */
+      pointer-events: none;
+      /* Pour éviter que l'élément SVG n'interfère avec l'interaction de l'utilisateur */
+    }
+
+    #legalContent {
+      display: none;
+      /* Par défaut, caché */
+      transition: max-height 0.3s ease-out;
+      overflow: hidden;
+    }
+
+    #legalContent.block {
+      display: block;
+      max-height: 1000px;
+      /* Valeur assez grande pour faire l'animation */
+    }
+
+    #legalContent.hidden {
+      max-height: 0;
+    }
+
+    /* CAROUSEL */
+    .carousel {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .carousel-item {
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-item:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 1300px; /* Remplacez cette ligne avec la largeur du bloc noir */
+      margin: 0 auto; /* Centrez le carrousel */
+    }
+  </style>
+</head>
+
+<body>
+   
+  <!-- Section "titre" avec transformation -->
+  <div id="titre" style="position: absolute; width: 100%; height: 100vh; top: 320px; left: 450px;">
+    <div data-depth="0.3" class="absolute" style="width: 572px;">
+      <img src="frame.svg" alt="FRAME" class="w-full" style="transform-style: preserve-3d;">
+    </div>
+  </div>
+  
+  <div class="carousel-container mt-[675px] mx-auto w-[1300px]"></div>
+
+  <div class="p-5 rounded-[24%_/_51%] text-center">
+    <p class="text-2xl mb-6 text-white font-light mt-8 ml-36">
+      Les affiches de films sont de véritables œuvres d'art, marquant les esprits à travers les générations.<br>
+      Bien que moins cultes, les affiches de séries sont toutes aussi impactantes.
+    </p>
+  </div>
+  
+
+  <div class="relative w-full overflow-hidden flex justify-center">
+    <div id="carousel" class="flex gap-x-4 animate-carousel">
+      <div class="carousel-item flex-shrink-0">
+        <img src="pulp-fiction.webp" alt="Film 1" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="vertigo.webp" alt="Film 2" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="2.webp" alt="Film 3" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="3.webp" alt="Film 4" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="4.webp" alt="Film 5" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="6.webp" alt="Film 6" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="Les-Dents-de-la-Mer-affiche.webp" alt="Film 7" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="titanic.jpg" alt="Film 8" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="zoro.webp" alt="Film 9" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="gameofthrone.webp" alt="Film 10" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="Desperate_Housewives_TV_Series-174027172-large.webp" alt="Film 11" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="friends.webp" alt="Film 12" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+      <div class="carousel-item flex-shrink-0">
+        <img src="Wiki-background.webp" alt="Film 13" class="w-[150px] h-[225px] object-cover rounded-lg shadow-lg">
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    @keyframes carouselLoop {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); } /* Déplacer à -100% de la largeur totale */
+    }
+  
+    .animate-carousel {
+      display: flex;
+      animation: carouselLoop 10s linear infinite;
+      width: max-content; /* Définit la largeur à 100% de l'écran */
+    }
+  
+    #carousel {
+      display: flex;
+      position: relative;
+      width: max-content;
+    }
+  
+    .carousel-item {
+      min-width: 150px;
+      flex-shrink: 0;
+    }
+  
+    .relative {
+      width: 100%;
+      overflow: hidden;
+    }
+  </style>
+  
+  
+    <!-- Ajoutez plus d'éléments ici (environ 15 affiches de film) -->
+  </div>
+  </div>
+
+  <!-- Blocs de texte -->
+  <div class="w-[536px] h-72 left-[110px] top-[1268px] absolute">
+    <div class="w-[536px] absolute text-white text-4xl font-medium font-['Futura']">
+      Découvre le teaser artistique de notre prochaine vidéo YouTube !  Art, savoir et surprises au programme. Un avant-goût à ne pas manquer !
+    </div>
+  </div>
+  <div class="w-[536px] h-72 left-[110px] top-[2449px] absolute">
+    <div class="w-[536px] absolute text-white text-4xl font-medium font-['Futura']">
+      On t'embarque dans les coulisses de notre prochaine vidéo YouTube !  Savoir ce qu'il y a dans les coulisses d'une vidéo n'est pas donné à tout le monde...
+    </div>
+  </div>
+  <div class="w-[536px] h-72 left-[889px] top-[1859px] absolute">
+    <div class="w-[536px] absolute text-white text-4xl font-medium font-['Futura']">
+      Attention ! Seul l'humour est accepté ! Prépare toi à ce moment inoubliable lors du tournage !
+    </div>
+  </div>
+  <div class="w-[1300px] h-[818px] left-[106px] top-[3182px] absolute bg-black"></div>
+
+  <!-- Premier dessin titre avec parallax -->
+  <div id="svg-scene1"
+    style="position: absolute; left: 200px; top: 32px; width: 491px; height: 491px; overflow: visible;">
+    <div data-depth="0.4" style="transform: translateX(-50px);">
+      <svg width="491" height="491" viewBox="0 0 491 491" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M252.575 242.003C251.552 237.911 250.956 234.586 249.847 231.347C238.766 198.614 220.95 169.461 200.662 141.757C198.275 138.517 195.292 135.449 191.967 133.403C190.177 132.295 186.597 132.465 184.551 133.573C183.017 134.426 181.909 137.75 182.25 139.626C182.846 143.206 184.125 146.871 185.915 150.111C197.679 171.507 209.527 192.817 221.547 214.043C226.065 221.97 230.838 229.813 235.527 237.655C237.061 240.298 238.766 242.855 240.556 245.242C242.517 247.97 245.5 249.589 248.484 247.799C250.444 246.606 252.575 245.753 252.575 242.003Z"
+          fill="white"></path>
+        <path
+          d="M131.871 368.932C135.963 368.25 140.736 367.739 145.34 366.716C163.496 362.624 181.653 358.532 199.725 354.27C203.646 353.333 207.482 351.713 210.977 349.838C215.665 347.366 217.285 343.871 216.517 340.035C215.75 336.199 212.682 333.812 207.311 333.727C203.646 333.641 199.725 333.727 196.23 334.579C173.299 340.376 150.369 346.343 127.524 352.395C124.966 353.077 122.324 354.27 120.363 355.975C115.419 360.152 116.954 366.716 123.262 368.335C125.734 368.932 128.547 368.676 131.871 368.932Z"
+          fill="white"></path>
+        <path
+          d="M371.404 140.394C371.063 136.388 370.211 132.381 369.188 128.46C368.25 124.965 365.863 122.493 362.027 122.152C358.788 121.896 355.293 125.135 354.782 129.398C354.1 135.109 353.503 140.905 353.759 146.617C354.526 163.836 355.634 181.14 356.828 198.359C357.254 204.071 358.021 209.782 358.959 215.493C359.3 217.454 359.982 219.5 361.09 221.034C364.073 225.381 369.529 225.04 371.66 220.352C372.853 217.709 373.365 214.47 373.365 211.572C373.791 202.025 372.512 154.544 371.404 140.394Z"
+          fill="white"></path>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- Deuxième dessin titre avec parallax -->
+  <div id="svg-scene2"
+    style="position: absolute; left: 780px; top: 452px; width: 491px; height: 491px; overflow: visible;">
+    <div data-depth="0.3" style="transform: translateX(50px);">
+      <svg width="491" height="491" viewBox="0 0 491 491" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M238.425 248.997C239.448 253.089 240.044 256.414 241.153 259.653C252.234 292.386 270.05 321.539 290.338 349.243C292.725 352.483 295.708 355.551 299.033 357.597C300.823 358.705 304.403 358.535 306.449 357.427C307.983 356.574 309.091 353.25 308.75 351.374C308.154 347.794 306.875 344.129 305.085 340.889C293.321 319.493 281.473 298.183 269.453 276.957C264.935 269.03 260.162 261.187 255.473 253.345C253.939 250.702 252.234 248.145 250.444 245.758C248.484 243.03 245.5 241.411 242.517 243.201C240.556 244.394 238.425 245.247 238.425 248.997Z"
+          fill="white"></path>
+        <path
+          d="M359.129 122.068C355.037 122.75 350.264 123.261 345.66 124.284C327.504 128.376 309.347 132.468 291.275 136.73C287.354 137.667 283.518 139.287 280.023 141.162C275.335 143.634 273.715 147.129 274.483 150.965C275.25 154.801 278.318 157.188 283.689 157.273C287.354 157.359 291.275 157.273 294.77 156.421C317.701 150.624 340.631 144.657 363.476 138.605C366.034 137.923 368.676 136.73 370.637 135.025C375.581 130.848 374.046 124.284 367.738 122.665C365.266 122.068 362.453 122.324 359.129 122.068Z"
+          fill="white"></path>
+        <path
+          d="M119.596 350.606C119.937 354.613 120.789 358.619 121.812 362.54C122.75 366.035 125.137 368.507 128.973 368.848C132.212 369.104 135.707 365.865 136.218 361.602C136.9 355.891 137.497 350.095 137.241 344.383C136.474 327.164 135.366 309.86 134.172 292.641C133.746 286.93 132.979 281.218 132.041 275.507C131.7 273.546 131.018 271.501 129.91 269.966C126.927 265.619 121.471 265.96 119.34 270.648C118.147 273.291 117.635 276.53 117.635 279.428C117.209 288.975 118.488 336.456 119.596 350.606Z"
+          fill="white"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Étoiles avec parallax -->
+  <div id="svg-scene3"
+    style="position: absolute; left: 754px; top: 1032px; width: 128px; height: 128px; overflow: visible;">
+    <div data-depth="0.2" style="transform: translateX(30px);">
+      <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M114.311 40.5999C115 41.3554 115.088 42.4666 114.555 43.3554C114.066 44.1777 113.644 44.8888 113.155 45.5554C108.088 52.5777 105.311 56.2443 100.311 63.311C99.0439 65.0888 95.9773 70.5332 94.7995 72.3999C94.7773 72.4221 94.7773 72.4443 94.7551 72.4666C93.6884 74.0666 91.0662 73.9554 90.2217 72.1999C90.2217 72.1999 90.2217 72.1777 90.1995 72.1777C88.9551 69.4443 87.9551 66.6221 86.7995 63.8443C83.6217 56.1777 79.1995 49.5332 71.844 45.1777C69.1773 43.5999 69.1328 42.4443 71.1995 40.1554C71.9773 39.311 72.7551 38.4443 73.5995 37.6888C81.7551 30.4221 87.3773 21.4443 91.5773 11.4443C91.8439 10.8221 92.3773 10.3332 92.9551 9.84432C93.7106 9.2221 94.7995 9.31099 95.4662 10.0221C96.0217 10.5999 96.5328 11.2221 96.844 11.911C97.5328 13.511 97.7106 15.311 98.1328 17.0221C100.4 26.3332 105.444 33.7554 113.111 39.4666C113.533 39.7777 113.911 40.1777 114.311 40.5999ZM93.8884 18.2888C91.2439 22.6888 89.0217 27.2221 85.9995 31.1777C82.9106 35.1999 79.0439 38.6221 75.5106 42.3332C84.4884 47.711 89.6884 56.2221 92.8217 66.6666C97.4217 57.1554 103.777 49.5999 110.755 42.5332C99.7328 34.1332 97.1106 30.3332 93.8884 18.2888Z"
+          fill="white"></path>
+        <path
+          d="M30.511 117.289C28.4888 111.555 26.7332 105.711 24.511 100.067C22.3332 94.5999 19.0888 89.7332 14.4221 85.9777C12.711 84.5999 12.7554 83.3555 14.1554 81.7999C22.0221 73.2444 28.0665 63.5555 32.3999 52.7777C32.8665 51.6221 34.111 49.7777 34.9777 49.7777C37.3332 49.2221 38.1777 53.8221 38.2665 54.2443C40.2443 65.0888 46.9554 72.9777 54.4888 80.3555C56.9332 82.7555 57.1332 83.4888 54.7332 85.7999C45.6888 94.4666 39.6888 105.133 34.5332 116.355C32.911 120.267 30.7554 117.978 30.511 117.289Z"
+          fill="white"></path>
+        <path
+          d="M91.2441 93.378C86.333 99.978 83.333 107.511 80.5774 115.178C80.3997 115.667 79.8219 118.445 77.7108 118.422C77.1108 118.422 76.1108 117.467 75.733 116.711C74.0663 113.311 73.0219 109.511 70.9108 106.445C68.4219 102.8 64.9997 99.8002 62.1108 96.4447C61.6886 95.9558 61.533 94.8447 61.7997 94.2447C62.3108 93.1336 63.2219 92.2447 63.933 91.2225C67.5552 85.8891 71.1108 80.5113 74.8441 75.2669C75.6219 74.178 77.1552 72.8669 78.0663 72.8669C80.333 72.8447 80.7774 74.6225 81.1774 75.8891C82.9997 81.7114 86.133 86.578 90.6886 90.6002C92.3108 92.1114 91.4441 93.1114 91.2441 93.378ZM66.2886 94.9113C71.5774 98.6669 75.1775 104.089 77.3552 110.156C80.5775 104.245 83.8663 98.2225 87.2441 92.0002C82.7108 88.8669 79.5552 83.0225 78.1108 78.7113C74.1552 84.1336 70.2441 89.4891 66.2886 94.9113Z"
+          fill="white"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Autres SVG réintégrés -->
+  <!-- angle gauche short 2 -->
+  <div data-svg-wrapper class="left-[149px] top-[2216px] absolute">
+    <svg width="176" height="176" viewBox="0 0 176 176" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M171.242 104.767C164.459 103.025 153.031 101.161 148.814 98.2891C147.073 97.0975 147.287 95.7836 147.592 94.8669C147.898 94.0113 149.639 93.1252 150.709 93.1863C153.123 93.278 155.537 93.7975 157.859 94.4391C163.023 95.8447 168.156 97.3113 173.228 98.9919C175.917 99.878 176.773 101.925 175.214 103.239C174.298 104.003 173.442 104.767 171.242 104.767Z"
+        fill="white"></path>
+      <path
+        d="M64.2974 151.975C64.603 150.356 65.2141 149.5 66.1002 148.248C69.553 143.42 73.1585 138.684 76.703 133.948C76.9169 133.673 77.1613 133.367 77.4363 133.153C78.6585 132.114 80.0335 130.892 81.6224 132.023C83.2113 133.184 82.6613 134.895 81.8057 136.27C78.2613 142.045 74.6558 147.789 70.9891 153.503C70.4391 154.389 69.4919 155.153 68.5446 155.611C66.1919 156.742 64.1141 155.184 64.2974 151.975Z"
+        fill="white"></path>
+      <path
+        d="M140.656 150.907C140.656 152.282 139.587 153.26 138.792 153.412C137.723 153.626 136.806 153.443 135.278 152.404C134.759 152.068 134.453 151.243 134.148 150.601C131.917 145.774 129.656 140.976 127.487 136.118C126.937 134.926 126.387 133.551 126.478 132.299C126.57 131.168 127.273 129.549 128.189 129.151C129.076 128.754 130.267 128.632 131.673 130.007C132.192 130.496 132.681 131.321 133.017 132.085C135.217 137.187 137.417 142.29 139.556 147.424C139.953 148.401 140.198 149.471 140.656 150.907Z"
+        fill="white"></path>
+      <path
+        d="M43.6729 108.801C42.2673 108.404 41.3506 107.732 41.1368 106.815C40.8618 105.654 41.4423 104.096 42.1145 102.996C42.634 102.171 43.8256 101.651 44.834 101.315C49.8757 99.6345 54.9479 97.9845 60.0506 96.4262C60.9062 96.1512 62.0062 96.0595 62.8312 96.3345C64.1757 96.7928 64.7562 97.8623 63.6562 99.1456C63.0451 99.8789 62.3423 100.643 61.5173 101.04C56.7507 103.423 51.9534 105.715 47.1256 107.976C46.2395 108.373 45.0479 109.229 43.6729 108.801Z"
+        fill="white"></path>
+      <path
+        d="M147.195 56.3676C146.522 56.0926 145.942 54.9926 145.911 54.2593C145.881 53.2509 146.186 52.0287 146.797 51.2037C149.639 47.2926 152.633 43.4426 155.597 39.6231C156.025 39.0426 156.606 38.5843 157.186 38.1259C158.5 37.1176 160.211 36.2315 161.372 37.7593C162.045 38.6454 162.258 40.9065 161.617 41.6704C157.706 46.437 153.489 50.9898 149.303 55.5426C148.967 55.9398 148.295 56.5815 147.195 56.3676Z"
+        fill="white"></path>
+      <path
+        d="M49.2336 49.7371C50.9448 50.2565 52.2587 50.5621 53.5114 51.0204C57.1475 52.3343 60.7837 53.6787 64.3892 55.0537C65.3975 55.4509 66.467 55.8482 67.292 56.4898C67.8725 56.9482 68.5142 58.1093 68.3003 58.5371C67.9337 59.2398 67.3837 60.1259 66.1309 60.0343C65.6114 60.0037 64.9392 59.9732 64.3587 59.8204C60.2642 58.7204 56.1698 57.6815 52.1059 56.4593C50.7309 56.0621 49.2948 55.4815 48.1948 54.5954C47.4003 53.9537 46.667 52.5176 46.8809 51.6621C47.0642 50.8676 47.7364 49.7371 49.2336 49.7371Z"
+        fill="white"></path>
+      <path
+        d="M105.15 37.087C105.12 37.4537 105.089 37.8204 104.967 38.1565C104.448 39.6537 104.111 41.3343 102.003 41.1815C99.7726 41.0287 99.6809 39.1954 99.7115 37.6981C99.8032 34.0926 100.139 30.487 100.414 26.8509C100.536 25.537 100.689 24.1926 101.056 22.9398C101.423 21.6565 101.942 20.3426 103.714 20.5565C105.364 20.7704 105.914 21.8704 105.945 23.337C105.945 24.9259 105.456 34.0926 105.15 37.087Z"
+        fill="white"></path>
+    </svg>
+  </div>
+
+  <!-- Flèche 3 -->
+  <!-- Flèche placée en dessous du dernier iframe -->
+  <!-- Calcul : scène3 left = 800px, largeur = 371px, flèche largeur = 313px => left = 800 + (371 - 313)/2 = 829px -->
+  <div data-svg-wrapper class="relative" style="position: absolute; top: 2850px; left: 909px;">
+    <svg width="313" height="313" viewBox="0 0 313 313" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_147_215)">
+        <path
+          d="M170.721 262.696C167.817 242.703 164.951 222.726 161.861 202.748C161.656 201.362 159.957 199.78 158.574 199.088C125.477 182.785 107.433 155.883 103.711 119.523C103.092 113.479 104.378 107.168 107.551 100.855C111.719 92.5173 120.755 89.8247 129.015 94.1865C136.24 97.9963 140.82 104.244 144.772 111.048C153.469 126.142 158.378 142.721 162.699 159.421C165.442 170.005 167.542 180.734 170.037 191.712C175.067 191.269 180.13 187.289 181.55 182.65C184.28 173.868 183.983 169.031 184.018 161.588C184.132 138.229 178.618 115.792 169.876 94.3453C163.371 78.382 155.728 62.9032 148.572 47.2168C147.957 45.8457 147.194 44.5052 146.694 43.1808C145.91 41.113 145.977 39.3877 147.519 38.3471C148.838 37.0816 151.116 38.6736 152.259 39.6282C154.143 41.1959 155.763 43.1963 156.98 45.304C176.494 78.3692 191.012 113.24 193.845 152.027C194.458 160.539 193.778 169.25 192.611 177.719C190.901 189.878 184.681 198.737 171.405 201.024C173.492 220.148 175.556 238.994 177.666 258.172C180.002 252.375 182.213 246.887 184.44 241.361C184.814 240.433 185.072 239.459 185.523 238.563C186.728 236.129 187.565 232.603 191.291 233.835C194.94 235.035 193.624 238.413 192.775 240.632C188.545 251.91 184.183 263.18 179.412 274.239C177.458 278.753 173.556 279.741 170.207 276.235C160.422 266.183 151.063 255.628 141.798 245.066C140.934 244.089 140.066 241.448 142.036 239.682C143.695 238.463 146.307 239.561 147.38 240.577C153.841 246.73 160.045 253.183 166.319 259.575C167.438 260.699 168.526 261.901 169.629 263.065C171.156 265.297 170.942 264.268 170.721 262.696ZM159.005 190.995C160.35 191.672 159.374 188.853 159.282 188.412C154.483 165.319 148.97 142.433 138.556 121.121C135.778 115.42 131.9 109.993 127.509 105.394C121.652 99.3052 115.031 101.354 113.331 109.698C112.234 115.096 111.793 120.983 112.661 126.409C116.262 149.468 131.901 172.975 145.717 182.945C151.031 186.704 152.654 187.358 159.005 190.995Z"
+          fill="white" />
+      </g>
+      <defs>
+        <clipPath id="clip0_147_215">
+          <rect width="240" height="240" fill="white" transform="translate(312.31 89.7043) rotate(111.948)" />
+        </clipPath>
+      </defs>
+    </svg>
+  </div>
+
+
+
+  <!-- Flèche 2 (première occurrence) -->
+  <div data-svg-wrapper class="left-[617.60px] top-[2283.29px] absolute">
+    <svg width="295" height="295" viewBox="0 0 295 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_47_261)">
+        <path
+          d="M241.384 218.147C230.09 218.997 219.249 219.768 208.419 220.579C206.259 220.731 204.735 220.841 202.058 221.478C200.066 221.93 195.861 222.98 196.799 225.014C197.749 226.613 198.627 227.627 202.409 227.728C212.177 227.937 221.897 226.692 231.547 225.509C240.068 224.459 246.55 223.528 254.034 222.153C257.529 221.511 258.44 219.452 257.19 216.423C256.067 213.706 254.963 210.896 253.35 208.44C247.583 199.554 241.606 190.853 235.689 182.05C234.961 180.952 234.458 180.052 233.405 178.869C232.115 177.448 231.255 176.342 229.656 177.292C228.126 178.18 228.859 180.572 229.466 181.703C234.337 191.263 244.713 210.817 245.028 211.984C238.845 210.028 233.083 208.348 227.405 206.343C187.931 192.191 149.8 175.344 116.142 149.65C89.4987 129.312 65.7233 106.171 45.5379 79.3833C44.3357 77.8091 42.9835 76.3185 41.653 74.9084C39.8779 72.971 38.6114 72.2773 37.546 73.1262C35.7618 74.9894 36.6314 76.6104 37.2129 77.9639C38.3356 80.6818 40.0509 83.1964 41.7042 85.6415C64.16 118.117 92.9316 144.095 125.242 166.398C158.403 189.292 195.307 203.837 233.578 215.293C235.619 215.82 240.545 217.597 241.384 218.147Z"
+          fill="white"></path>
+      </g>
+      <defs>
+        <clipPath id="clip0_47_261">
+          <rect width="240" height="240" fill="white"
+            transform="matrix(0.965387 -0.260821 -0.260821 -0.965387 62.5972 294.29)"></rect>
+        </clipPath>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Flèche 1 avec effet de fuite du curseur -->
+  <!-- Flèche 2 (deuxième occurrence) avec l'effet de fuite du curseur -->
+  <div data-svg-wrapper class="cursor-flee-svg" style="position: absolute; left: 607.57px; top: 1402px;">
+    <svg width="275" height="275" viewBox="0 0 275 275" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_47_262)">
+        <path
+          d="M64.8595 176.236C60.6682 172.07 56.6546 167.849 52.3766 163.964C50.9412 162.64 48.9432 160.341 46.9433 161.247C45.8467 162.043 45.9643 164.762 45.9373 166.53C45.6547 186.945 47.5146 207.152 53.3843 226.813C56.1365 236.067 57.7561 237.294 66.9777 236.604C86.4414 235.174 105.255 231.195 123.484 224.508C124.249 224.207 129.272 221.797 127.977 220.116C121.772 215.884 115.91 211.875 109.739 207.691C112.399 204.484 114.902 201.464 117.406 198.444C145.115 164.952 173.639 132.179 206.925 103.958C214.77 97.3127 222.65 90.7148 230.495 84.0693C234.388 80.805 234.607 79.1523 230.57 75.3484C223.709 68.8612 216.705 62.4778 209.478 56.4387C200.465 48.8932 191.091 41.7546 181.868 34.4711C177.821 31.2563 174.059 31.0397 169.874 34.5529C139.137 60.2668 111.51 88.7097 91.9816 124.089C82.5816 141.077 74.0477 158.455 64.8595 176.236ZM52.9602 173.591C55.4968 177.284 57.9315 181.087 60.713 184.565C63.1005 187.601 66.6401 187.36 68.5656 183.995C70.7817 180.128 73.1558 176.328 75.2614 172.358C100.11 125.504 129.79 82.2413 169.869 46.8285C171.434 45.4734 172.929 44.0229 173.868 43.1592C190.572 55.6783 206.671 67.7639 222.693 79.7953C213.463 87.1917 204.394 94.1073 195.595 101.445C159.08 131.939 129.023 168.265 101.402 206.791C99.0716 210.05 99.9063 212.503 102.873 214.281C106.913 216.735 115.913 221.705 115.913 221.705C97.9125 225.349 79.3443 229.114 61.166 232.814C60.906 232.857 60.5964 232.681 60.512 232.415C55.3725 212.405 52.2555 193.476 52.6049 173.703C52.631 173.539 52.8498 173.489 52.9602 173.591Z"
+          fill="white"></path>
+      </g>
+      <defs>
+        <clipPath id="clip0_47_262">
+          <rect width="240" height="240" fill="white"
+            transform="matrix(-0.156533 0.987673 0.987673 0.156533 37.5679 0)"></rect>
+        </clipPath>
+      </defs>
+    </svg>
+  </div>
+
+
+
+
+  <!-- SVG en bas de page -->
+  <div data-svg-wrapper class="left-[48px] top-[3942px] absolute">
+    <svg width="115" height="115" viewBox="0 0 115 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M42.9253 43.0451C40.9288 41.6076 39.4713 40.5494 38.0139 39.5112C32.1441 35.2985 26.2343 31.1058 20.4045 26.8333C19.0069 25.815 17.6892 24.5572 16.7109 23.1597C16.1519 22.3211 15.9722 20.8237 16.3515 19.9452C16.5711 19.4261 18.368 19.1466 19.2265 19.4461C21.3229 20.1449 23.3593 21.1032 25.276 22.2013C31.2456 25.6553 37.1554 29.2291 43.3246 32.9027C43.8837 29.2291 44.3628 25.5755 45.0416 21.9617C45.5607 19.1666 46.2795 16.3715 47.0581 13.6362C47.5573 11.8593 48.6154 10.322 50.7517 10.6215C52.9679 10.9209 53.6866 12.6779 53.6467 14.6544C53.5668 20.5442 53.3672 26.414 53.2474 32.3038C53.2074 33.7013 53.2474 35.0989 53.2474 36.4965C53.467 36.6961 55.3437 35.019 56.2222 34.1605C63.7291 26.8133 71.2361 19.506 78.8229 12.2386C79.881 11.2204 81.2187 10.3619 82.5764 9.80289C83.2951 9.50341 84.6527 9.72302 85.1319 10.2421C85.6111 10.7612 85.7109 12.1189 85.3715 12.8176C84.7326 14.1553 83.7743 15.3732 82.756 16.4713C76.0677 23.8185 69.3394 31.1258 62.631 38.4531C61.8923 39.2517 61.1536 40.0902 60.0555 41.3081C65.0868 40.9487 69.6189 40.5494 74.151 40.3098C83.2751 39.8506 92.4192 39.4713 101.543 39.072C102.102 39.052 102.701 39.052 103.181 39.1518C106.315 39.8107 106.036 42.9452 103.68 43.3445C100.805 43.8437 97.9097 44.4626 94.9948 44.7621C84.5529 45.8003 74.1111 46.7187 63.6692 47.697C63.4496 47.7169 63.25 47.7968 62.5911 47.9765C65.4661 50.2326 68.1215 52.309 70.7769 54.3654C75.7882 58.2786 80.8593 62.1319 85.7908 66.1249C87.1085 67.2031 88.2665 68.6206 89.105 70.098C90.0034 71.6553 89.0651 72.993 87.3481 72.5737C85.2517 72.0346 83.0955 71.1761 81.3185 69.9583C72.6536 64.0485 64.1085 57.9591 55.5234 51.9296C54.5651 51.2508 53.6067 50.572 52.2092 49.5537C51.9097 54.0859 51.6701 58.1588 51.3507 62.2317C50.3923 74.3506 49.434 86.4696 48.4357 98.5885C48.3159 99.9261 48.0564 101.284 47.6571 102.562C47.118 104.319 45.9201 105.476 43.9835 105.337C42.1666 105.197 41.1085 103.979 40.789 102.262C40.4896 100.625 40.3298 98.9478 40.3498 97.2907C40.4696 86.4695 40.6493 75.6683 40.809 64.8472C40.829 64.0485 40.809 63.2699 40.809 61.8923C39.8906 62.7708 39.2517 63.3498 38.6328 63.9687C31.7248 70.8767 24.8168 77.8046 17.8889 84.7126C17.1102 85.4913 16.2317 86.2699 15.2335 86.7091C14.5547 87.0086 13.3567 86.9886 12.8376 86.5694C12.3185 86.1501 12.1988 84.9722 12.1988 84.2734C12.2187 82.0772 13.3967 81.0989 14.4349 79.8411C20.5442 72.434 26.7534 65.0867 33.0026 57.7794C35.2586 55.144 37.7144 52.6883 40.6093 49.6136C35.1988 50.2326 30.5069 50.8315 25.8151 51.2708C21.3029 51.69 16.7908 51.9496 12.2586 52.269C11.7795 52.309 11.2803 52.2291 10.8411 52.1692C8.54511 51.8897 9.84285 49.4539 10.5017 49.2942C15.0338 48.1761 19.6059 47.098 24.1979 46.2595C29.6484 45.3211 41.6875 43.4643 42.9253 43.0451Z"
+        fill="white"></path>
+    </svg>
+  </div>
+
+  <!-- Shorts YouTube avec Parallax -->
+  <div id="scene1" class="parallax-scene"
+    style="position: absolute; width: 371px; height: 600px; top: 2246px; left: 800px; overflow: visible;">
+    <div data-depth="0.3" class="shorts-container" style="transform: translateX(100px);">
+      <iframe src="https://www.youtube.com/embed/jxNnMPWZ_FY" title="L'équation mathématique la + Importante"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <div id="scene2" class="parallax-scene"
+    style="position: absolute; width: 371px; height: 600px; top: 1704px; left: 337px; overflow: visible;">
+    <div data-depth="0.3" class="shorts-container" style="transform: translateX(-100px);">
+      <iframe src="https://www.youtube.com/embed/jxNnMPWZ_FY" title="L'équation mathématique la + Importante"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <div id="scene3" class="parallax-scene"
+    style="position: absolute; width: 371px; height: 600px; top: 1160px; left: 800px; overflow: visible;">
+    <div data-depth="0.35" class="shorts-container" style="transform: translateX(100px);">
+      <iframe src="https://www.youtube.com/embed/jxNnMPWZ_FY" title="L'équation mathématique la + Importante"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Texte "Découvre notre vidéo" avec position absolue -->
+  <div class="absolute" style="top: 3050px; left: 119px;">
+    <div class="text-white text-[61px] font-bold font-[Futura]">
+      Découvre notre vidéo
+    </div>
+  </div>
+
+  <!-- Texte central et image associée -->
+  <div class="text-white text-left mx-auto px-4"
+    style="font-family: 'Futura', sans-serif; position: absolute; left: 50%; transform: translateX(-50%); top: 4100px; width: 1030px; font-size: 1.2rem; z-index: 2; color: #3D52D5;">
+    <p class="text-2xl mb-6" style="color: white;">
+      Superman et Loïs, la série qui réinvente le mythe de Superman avec une approche plus humaine et intime.<br>
+      Aujourd'hui c'est Guillaume BARKI alias KIBAR qui nous rejoint pour reproduire l'affiche de cette série à sa sauce.<br>
+      Un grand merci pour son talent et le temps consacré.
+  </p>
+  
+  </div>
+  
+
+  <img src="dessin texte.svg" alt="Affiche personnalisée"
+    style="height: 390px; display: block; position: absolute; left: 50%; top: 3997px; transform: translateX(-50%);">
+
+  <!-- Section "Rejoins notre chaîne" -->
+  <div class="flex flex-col items-center justify-center w-full" style="margin-top: 207rem;">
+    <div class="text-white text-[191px] font-bold font-['Futura'] -mb-20">
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">R</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">E</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">J</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">O</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">I</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">N</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">S</a>
+    </div>
+    <div class="text-white text-[191px] font-bold font-['Futura'] -mb-20">
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">N</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">O</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">T</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">R</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">E</a>
+    </div>
+    <div class="text-white text-[191px] font-bold font-['Futura']">
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">C</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">H</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">A</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">Î</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">N</a>
+      <a href="https://www.youtube.com/@la_frame" class="hover-letter" target="_blank">E</a>
+    </div>
+  </div>
+
+
+<!-- Carrousel Slick -->
+<div class="center">
+  <div>
+    <img src="didi.webp" alt="Image 1">
+    <p class="name font-bold">ANDY</p>
+    <p class="name">Developpeur</p>
+  </div>
+  <div>
+    <img src="100.webp" alt="Image 2">
+    <p class="name font-bold">SAMY</p>
+    <p class="name">Cardreur</p>
+    <p class="name">intervieweur</p>
+  </div>
+  <div>
+    <img src="101.webp" alt="Image 3">
+    <p class="name font-bold">ELOYA</p>
+    <p class="name">Graphiste</p>
+    <p class="name">Cardreuse</p>
+  </div>
+  <div>
+    <img src="1003.webp" alt="Image 5">
+    <p class="name font-bold">CELINE</p>
+    
+    <p class="name">ingénieur son</p>
+    <p class="name">Charger de la stratégie</p>
+  </div>
+  <div>
+    <img src="104.webp" alt="Image 6">
+    <p class="name font-bold">CEDRIC</p>
+    <p class="name">Charger de la statégie</p>
+    <p class="name">Cardreur</p>
+    
+  </div>
+  <div>
+    <img src="105.webp" alt="Image 7">
+    <p class="name font-bold">ERWIN</p>
+    <p class="name">Chef de projet</p>
+    <p class="name">Monteur</p>
+  </div>
+  <div>
+    <img src="106.webp" alt="Image 8">
+    <p class="name font-bold">NOAH</p>
+    <p class="name">Chef de projet</p>
+  </div>
+</div>
+
+<!-- Lien vers la bibliothèque jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Lien vers la bibliothèque Slick -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<!-- Initialisation du carrousel Slick -->
+<script>
+  $(document).ready(function () {
+    $('.center').slick({
+      centerMode: true,  // Mode centré
+      centerPadding: '60px',  // Espacement autour de l'image centrale
+      slidesToShow: 3,  // Nombre d'images affichées à la fois
+      focusOnSelect: true,  // Permet de sélectionner l'image au centre
+      arrows: true,  // Affichage des flèches de navigation
+      autoplay: true,  // Défilement automatique
+      autoplaySpeed: 2000,  // Vitesse du défilement automatique (en ms)
+      responsive: [
+        {
+          breakpoint: 768,  // Pour les écrans de taille moyenne
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 480,  // Pour les petits écrans
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 1
+          }
+        }
+      ]
+    });
+  });
+</script>
+
+<style>
+  /* Style pour le nom sous chaque image */
+  .center .slick-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .name {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .center img {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+</style>
+
+
+          <path class="cls-1"
+            d="M50.56,84.1h-6.84v-8.6h10.75c1.27,0,2.12-1.12,2.12-2.71s-.85-2.55-2.12-2.55h-10.75v-8.92h11.94c5.61,0,9.09,2.81,9.09,10.04,0,4.73-2.63,8.39-6.33,9.19,4.21.85,5.56,3.88,5.56,9.19v8.76h-8.16v-8.23c0-4.78-1.4-6.16-5.27-6.16Z" />
+          <path class="cls-1"
+            d="M42.74,41.86s-3.45,23.63-3.45,38.14c0,14.51,3.45,38.14,3.45,38.14h-6.91v-38.14s0-38.14,0-38.14h6.91Z" />
+          <path class="cls-1"
+            d="M64.97,41.86s3.45,23.63,3.45,38.14c0,14.51-3.45,38.14-3.45,38.14h6.91v-38.14s0-38.14,0-38.14h-6.91Z" />
+          <path class="cls-1"
+            d="M96.83,118.14h-6.78l-.92-13.35h-5.75l-.92,13.35h-6.57l5.54-76.28h9.75l5.65,76.28ZM85.75,70.61l-1.95,28.23h4.93l-1.85-28.23-.41-15.71h-.31l-.41,15.71Z" />
+          <path class="cls-1"
+            d="M105.15,118.14h-6.26V41.86h8.21l3.9,42.81.31,8.32h.21l.21-8.32,3.9-42.81h8.21v76.28h-6.26v-32.54l1.23-29.15h-.21l-.62,6.57-3.9,42.4h-5.44l-3.9-42.4-.62-6.57h-.21l1.23,29.15v32.54Z" />
+          <path class="cls-1" d="M140.98,118.14h-13.65V41.86h13.65v5.95h-6.98v28.03h5.95v5.85h-5.95v30.49h6.98v5.95Z" />
+          <path class="cls-1" d="M25.7,118.14h-6.67V41.86h13.55v6.06h-6.88v29.77h5.95v5.95h-5.95v34.49Z" />
+        </svg>
+      </div>
+    </a>
+  </div>
+  <div class="faq-section bg-white/95 backdrop-blur-md rounded-lg p-8 shadow-xl mx-auto" style="margin-top: 200px; width: 1030px;">
+    <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Foire Aux Questions</h2>
+
+    <!-- Questions fréquentes -->
+    <div class="space-y-4">
+        <div class="faq-item transition-all duration-300">
+            <button class="faq-question w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg font-semibold flex justify-between items-center transition-all duration-300">
+                <span>Comment puis-je participer au projet Frame ?</span>
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer hidden p-4 text-gray-600 bg-gray-50 rounded-b-lg">
+                Vous pouvez participer au projet Frame de plusieurs façons :
+                <ul class="list-disc ml-6 mt-2">
+                    <li>En nous contactant via le formulaire ci-dessous</li>
+                    <li>En partageant vos créations sur les réseaux sociaux avec #FrameProject</li>
+                    <li>En rejoignant notre communauté Discord</li>
+                    <li>En participant à nos challenges mensuels d'affiches</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item transition-all duration-300">
+            <button class="faq-question w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg font-semibold flex justify-between items-center transition-all duration-300">
+                <span>Quel type d'affiches peut-on créer ?</span>
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer hidden p-4 text-gray-600 bg-gray-50 rounded-b-lg">
+                Notre plateforme est ouverte à toute forme de créativité :
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Affiches de films et séries</li>
+                    <li>Posters d'événements culturels</li>
+                    <li>Créations artistiques personnelles</li>
+                    <li>Réinterprétations d'affiches classiques</li>
+                    <li>Designs minimalistes ou complexes</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item transition-all duration-300">
+            <button class="faq-question w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg font-semibold flex justify-between items-center transition-all duration-300">
+                <span>Quels sont les formats acceptés ?</span>
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer hidden p-4 text-gray-600 bg-gray-50 rounded-b-lg">
+                <p>Nous acceptons les formats suivants :</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>JPG/JPEG (300 DPI minimum)</li>
+                    <li>PNG avec transparence</li>
+                    <li>PDF haute résolution</li>
+                    <li>Fichiers source (PSD, AI, XD)</li>
+                </ul>
+                <p class="mt-2 text-sm italic">Note : Assurez-vous que vos créations respectent les dimensions recommandées pour un rendu optimal.</p>
+            </div>
+        </div>
+
+        <div class="faq-item transition-all duration-300">
+            <button class="faq-question w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg font-semibold flex justify-between items-center transition-all duration-300">
+                <span>Comment sont sélectionnés les projets ?</span>
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer hidden p-4 text-gray-600 bg-gray-50 rounded-b-lg">
+                <p>Notre processus de sélection se base sur plusieurs critères :</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Originalité du concept</li>
+                    <li>Qualité technique de l'exécution</li>
+                    <li>Respect du thème (si applicable)</li>
+                    <li>Impact visuel et créativité</li>
+                </ul>
+                <p class="mt-2">Chaque projet est évalué par notre équipe créative et la communauté.</p>
+            </div>
+        </div>
+
+        <div class="faq-item transition-all duration-300">
+            <button class="faq-question w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg font-semibold flex justify-between items-center transition-all duration-300">
+                <span>Puis-je utiliser mes créations commercialement ?</span>
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer hidden p-4 text-gray-600 bg-gray-50 rounded-b-lg">
+                <p>Les droits d'utilisation dépendent de plusieurs facteurs :</p>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Les créations originales vous appartiennent</li>
+                    <li>Les réinterprétations doivent respecter les droits d'auteur</li>
+                    <li>Les projets collaboratifs suivent des conditions spécifiques</li>
+                </ul>
+                <p class="mt-2 text-sm italic">Contactez-nous pour plus d'informations sur les licences commerciales.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulaire de contact -->
+    <div class="contact-form mt-16 bg-gray-50 p-8 rounded-lg">
+        <h3 class="text-2xl font-bold mb-6 text-center text-gray-800">Vous avez une question ?</h3>
+        <form id="questionForm" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300">
+                </div>
+            </div>
+
+            <div>
+                <label for="question" class="block text-sm font-medium text-gray-700">Votre question</label>
+                <textarea id="question" name="question" rows="4" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:scale-105 hover:shadow-[4px_4px_12px_rgba(0,0,0,0.3)] hover:translate-x-[20px] hover:translate-y-[20px]">
+                    Envoyer ma question
+                </button>
+            </div>
+        </form>
+        <!-- Message de succès (caché par défaut) -->
+        <div id="successMessage" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md text-center animate-fade-in">
+            <p class="flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Votre question a été envoyée avec succès !
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="w-full flex flex-col items-center mt-32">
+    <a href="mailto:recruteur@exemple.com?subject=Demande%20de%20participation%20à%20la%20vidéo" class="contact-button">
+        Nous contacter
+    </a>
+    
+
+</div>
+
+<style>
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        animation: fade-in 0.5s ease-out;
+    }
+    .faq-answer {
+        transition: all 0.3s ease-in-out;
+    }
+    .faq-question:hover {
+        transform: translateX(5px);
+    }
+</style>
+
+<script>
+    // Script amélioré pour la FAQ
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allIcons = document.querySelectorAll('.faq-question svg');
+
+            // Fermer toutes les autres réponses
+            allAnswers.forEach(item => {
+                if (item !== answer && !item.classList.contains('hidden')) {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Réinitialiser toutes les icônes
+            allIcons.forEach(item => {
+                if (item !== icon) {
+                    item.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Basculer la réponse actuelle
+            answer.classList.toggle('hidden');
+            icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+
+            // Animation de la réponse
+            if (!answer.classList.contains('hidden')) {
+                answer.style.opacity = '0';
+                answer.style.maxHeight = '0';
+                setTimeout(() => {
+                    answer.style.opacity = '1';
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }, 100);
+            }
+        });
+    });
+</script>
+
+
+  <!-- Mentions légales -->
+  <div class="w-full flex flex-col items-center mt-32">
+    <button id="toggleButton" onclick="toggleLegal()"
+      class="text-white text-lg opacity-70 hover:opacity-100 transition-all duration-300 font-['Futura'] cursor-pointer"
+      aria-expanded="false">
+      Mentions légales
+    </button>
+  
+    <div id="legalContent"
+      class="hidden transition-all duration-500 text-white text-sm mt-2 w-[80%] max-w-2xl">
+      <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
+        <h3 class="font-bold mb-2">Mentions légales</h3>
+        <p>© 2024 Frame. Tous droits réservés.</p>
+        <p class="mt-2">
+          Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance en l'économie numérique,
+          il est précisé aux utilisateurs du site Frame l'identité des différents intervenants dans le cadre de sa
+          réalisation et de son suivi.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function toggleLegal() {
+      const content = document.getElementById("legalContent");
+      const button = document.getElementById("toggleButton");
+  
+      if (content.classList.contains("hidden")) {
+        content.classList.remove("hidden");
+        content.classList.add("block");
+        button.setAttribute("aria-expanded", "true");
+      } else {
+        content.classList.add("hidden");
+        content.classList.remove("block");
+        button.setAttribute("aria-expanded", "false");
+      }
+    }
+  </script>
+  
+
+  <!-- Scripts -->
+  <script>
+    // Titre
+    document.addEventListener("DOMContentLoaded", function () {
+  // Effet parallaxe sur le titre
+  const titre = document.getElementById("titre");
+
+  window.addEventListener("scroll", function () {
+    const scrollPos = window.scrollY;
+    const translateY = -scrollPos * 0.5;
+    const opacity = Math.max(1 - scrollPos / 600, 0);
+
+    titre.style.transform = `translateY(${translateY}px)`;
+    titre.style.opacity = opacity;
+  });
+
+  // Effet parallaxe sur les SVG
+  const svgElements = document.querySelectorAll(".parallax-svg");
+
+  window.addEventListener("scroll", function () {
+    const scrollPos = window.scrollY;
+
+    svgElements.forEach(function (el) {
+      const depth = parseFloat(el.dataset.depth) || 0.3;
+      const translateY = -scrollPos * depth;
+      const opacity = Math.max(1 - scrollPos / (600 * (1 + depth)), 0);
+
+      el.style.transform = `translateY(${translateY}px)`;
+      el.style.opacity = opacity;
+    });
+  });
+
+  // Animation dessin titre 1
+  const svgScene1 = document.getElementById("svg-scene1");
+  window.addEventListener("scroll", function () {
+    const scrollPos = window.scrollY;
+    const translateY = -scrollPos * 0.4;
+    const opacity = Math.max(1 - scrollPos / 600, 0);
+
+    svgScene1.style.transform = `translateY(${translateY}px)`;
+    svgScene1.style.opacity = opacity;
+  });
+
+  // Animation dessin titre 2
+  const svgScene2 = document.getElementById("svg-scene2");
+  window.addEventListener("scroll", function () {
+    const scrollPos = window.scrollY;
+    const translateY = -scrollPos * 0.3;
+    const opacity = Math.max(1 - scrollPos / 700, 0);
+
+    svgScene2.style.transform = `translateY(${translateY}px)`;
+    svgScene2.style.opacity = opacity;
+  });
+
+  // Animation étoiles (Correction de "ddocument" → "document")
+  const svgScene3 = document.getElementById("svg-scene3");
+  window.addEventListener("mousemove", function (e) {
+    const rect = svgScene3.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const deltaX = e.clientX - centerX;
+    const deltaY = e.clientY - centerY;
+
+    const factor = 0.1;
+    const translateX = -deltaX * factor;
+    const translateY = -deltaY * factor;
+
+    svgScene3.style.transform = `translate(${translateX}px, ${translateY}px)`;
+  });
+
+  // Effet de scroll sur les éléments avec animation
+  const parallaxElements = document.querySelectorAll(".parallax-element");
+
+  window.addEventListener("scroll", function () {
+    const scrollPos = window.scrollY;
+
+    parallaxElements.forEach(function (element) {
+      const rect = element.getBoundingClientRect();
+      const elementTop = rect.top + scrollPos;
+      const elementHeight = element.offsetHeight;
+
+      if (elementTop < window.innerHeight && elementTop + elementHeight > 0) {
+        const translateY = scrollPos * 0.2;
+        element.style.transform = `translateY(${translateY}px)`;
+        element.classList.add("visible");
+      }
+    });
+  });
+
+  // Animation de suivi de curseur pour le SVG
+  const parallaxElement = document.querySelector(".cursor-flee-svg");
+
+  document.addEventListener("mousemove", function (event) {
+    const mouseX = event.pageX;
+    const mouseY = event.pageY;
+    const rect = parallaxElement.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const deltaX = (mouseX - centerX) * 0.1;
+    const deltaY = (mouseY - centerY) * 0.1;
+
+    parallaxElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  });
+
+  // Fonction d'accordéon pour afficher/cacher le contenu
+  window.toggleLegal = function () {
+    var content = document.getElementById("legalContent");
+    content.classList.toggle("hidden");
+    content.classList.toggle("block");
+  };
+
+  // CARROUSEL D'IMAGES - Défilement automatique et interaction utilisateur
+  const carousel = document.getElementById("carousel");
+  let isMouseDown = false;
+  let startX, scrollLeft;
+  let autoScroll;
+
+  function startAutoScroll() {
+    autoScroll = setInterval(() => {
+      carousel.scrollLeft += 1; // Ajuste la vitesse ici
+      if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth) {
+        carousel.scrollLeft = 0; // Effet infini
+      }
+    }, 10);
+  }
+
+  function stopAutoScroll() {
+    clearInterval(autoScroll);
+  }
+
+  startAutoScroll(); // Lancer le défilement automatique
+
+  function handleMouseDown(e) {
+    isMouseDown = true;
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+    stopAutoScroll();
+  }
+
+  function handleMouseLeave() {
+    isMouseDown = false;
+    startAutoScroll();
+  }
+
+  function handleMouseUp() {
+    isMouseDown = false;
+    startAutoScroll();
+  }
+
+  function handleMouseMove(e) {
+    if (!isMouseDown) return;
+    e.preventDefault();
+    const x = e.pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 2;
+    carousel.scrollLeft = scrollLeft - walk;
+  }
+
+  carousel.addEventListener("mousedown", handleMouseDown);
+  carousel.addEventListener("mouseleave", handleMouseLeave);
+  carousel.addEventListener("mouseup", handleMouseUp);
+  carousel.addEventListener("mousemove", handleMouseMove);
+});
+window.addEventListener("scroll", () => {
+    const scrollPosition = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+    // Normaliser la valeur entre 0 et 1
+    const scrollPercent = scrollPosition / maxScroll;
+
+    // Définir le bleu clair comme base
+    const baseBlue = 150; // Bleu clair
+    const baseGreen = 50; // Un peu de vert pour un bleu clair
+
+    // Calcul des couleurs : en fonction du défilement
+    // Augmenter le bleu foncé à mesure que l'on descend
+    const red = 0; // Pas de rouge
+    const green = Math.floor(baseGreen + 50 * scrollPercent);  // Ajout de vert pour rendre le bleu plus intense
+    const blue = Math.floor(baseBlue + 100 * scrollPercent);   // Ajout de bleu pour éclaircir encore plus
+
+    // Appliquer la couleur de fond
+    document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+});
+
+
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+</body>
+
+</html>
