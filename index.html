@@ -327,7 +327,12 @@
       On t'embarque dans les coulisses de notre prochaine vidéo YouTube !  Savoir ce qu'il y a dans les coulisses d'une vidéo n'est pas donné à tout le monde...
     </div>
   </div>
-  <div class="w-[1300px] h-[818px]  top-[3182px] transform left-1/2 -translate-x-1/2  absolute bg-black"></div>
+  <div class="w-[1300px] h-[818px]  top-[3182px] transform left-1/2 -translate-x-1/2  absolute bg-black">
+    <iframe src="https://www.youtube.com/embed/jxNnMPWZ_FY" title="L'équation mathématique la + Importante"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+      </iframe>
+  </div>
 
   <!-- Premier dessin titre avec parallax -->
   <div id="svg-scene1"
@@ -566,44 +571,45 @@
   <div>
     <img src="didi.webp" alt="Image 1">
     <p class="name font-bold">ANDY</p>
-    <p class="name">Developpeur</p>
+    <p class="name">Developpeur web</p>
   </div>
   <div>
-    <img src="100.webp" alt="Image 2">
-    <p class="name font-bold">SAMY</p>
-    <p class="name">Cardreur</p>
+    <img src="105.webp" alt="Image 2">
+    <p class="name font-bold">SAMI</p>
+    <p class="name">Cadreur</p>
     <p class="name">intervieweur</p>
   </div>
   <div>
     <img src="101.webp" alt="Image 3">
     <p class="name font-bold">ELOYA</p>
     <p class="name">Graphiste</p>
-    <p class="name">Cardreuse</p>
+    <p class="name">Cadreuse</p>
   </div>
   <div>
     <img src="1003.webp" alt="Image 5">
     <p class="name font-bold">CELINE</p>
     
-    <p class="name">ingénieur son</p>
-    <p class="name">Charger de la stratégie</p>
+    <p class="name">Ingénieur son</p>
+    <p class="name">Chargé de stratégie</p>
   </div>
   <div>
-    <img src="104.webp" alt="Image 6">
+    <img src="106.webp" alt="Image 6">
     <p class="name font-bold">CEDRIC</p>
-    <p class="name">Charger de la statégie</p>
-    <p class="name">Cardreur</p>
+    <p class="name">Chargé de statégie</p>
+    <p class="name">Cadreur</p>
     
   </div>
   <div>
-    <img src="105.webp" alt="Image 7">
+    <img src="100.webp" alt="Image 7">
     <p class="name font-bold">ERWIN</p>
     <p class="name">Chef de projet</p>
     <p class="name">Monteur</p>
   </div>
   <div>
-    <img src="106.webp" alt="Image 8">
+    <img src="104.webp" alt="Image 8">
     <p class="name font-bold">NOAH</p>
     <p class="name">Chef de projet</p>
+    <p class="name">Développeur web</p>
   </div>
 </div>
 
@@ -852,67 +858,148 @@
 </style>
 
 <script>
-    // Script amélioré pour la FAQ
-    document.querySelectorAll('.faq-question').forEach(button => {
-        button.addEventListener('click', () => {
-            const answer = button.nextElementSibling;
-            const icon = button.querySelector('svg');
-            const allAnswers = document.querySelectorAll('.faq-answer');
-            const allIcons = document.querySelectorAll('.faq-question svg');
+    document.addEventListener('DOMContentLoaded', () => {
+        // Script amélioré pour la FAQ
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('svg');
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                const allIcons = document.querySelectorAll('.faq-question svg');
 
-            // Fermer toutes les autres réponses
-            allAnswers.forEach(item => {
-                if (item !== answer && !item.classList.contains('hidden')) {
-                    item.classList.add('hidden');
+                // Fermer toutes les autres réponses
+                allAnswers.forEach(item => {
+                    if (item !== answer && !item.classList.contains('hidden')) {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                // Réinitialiser toutes les icônes
+                allIcons.forEach(item => {
+                    if (item !== icon) {
+                        item.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Basculer la réponse actuelle
+                answer.classList.toggle('hidden');
+                icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                // Animation de la réponse
+                if (!answer.classList.contains('hidden')) {
+                    answer.style.opacity = '0';
+                    answer.style.maxHeight = '0';
+                    setTimeout(() => {
+                        answer.style.opacity = '1';
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }, 100);
                 }
             });
+        });
 
-            // Réinitialiser toutes les icônes
-            allIcons.forEach(item => {
-                if (item !== icon) {
-                    item.style.transform = 'rotate(0deg)';
-                }
-            });
+        // Gestion du formulaire pour afficher un message de confirmation sans recharger la page
+        document.getElementById('questionForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Empêche l'envoi par défaut du formulaire
 
-            // Basculer la réponse actuelle
-            answer.classList.toggle('hidden');
-            icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            // Masquer le formulaire
+            this.style.display = 'none';
 
-            // Animation de la réponse
-            if (!answer.classList.contains('hidden')) {
-                answer.style.opacity = '0';
-                answer.style.maxHeight = '0';
-                setTimeout(() => {
-                    answer.style.opacity = '1';
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }, 100);
-            }
+            // Afficher le message de succès
+            document.getElementById('successMessage').classList.remove('hidden');
         });
     });
 </script>
 
 
-  <!-- Mentions légales -->
-  <div class="w-full flex flex-col items-center mt-32">
-    <button id="toggleButton" onclick="toggleLegal()"
+ 
+
+
+
+
+
+
+
+ 
+
+<!-- Mentions légales -->
+<div class="w-full flex flex-col items-center mt-32">
+  <button id="toggleButton" onclick="toggleLegal()"
       class="text-white text-lg opacity-70 hover:opacity-100 transition-all duration-300 font-['Futura'] cursor-pointer"
       aria-expanded="false">
       Mentions légales
-    </button>
-  
-    <div id="legalContent"
+  </button>
+
+  <div id="legalContent"
       class="hidden transition-all duration-500 text-white text-sm mt-2 w-[80%] max-w-2xl">
       <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-        <h3 class="font-bold mb-2">Mentions légales</h3>
-        <p>© 2024 Frame. Tous droits réservés.</p>
-        <p class="mt-2">
-          Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance en l'économie numérique,
-          il est précisé aux utilisateurs du site Frame l'identité des différents intervenants dans le cadre de sa
-          réalisation et de son suivi.
-        </p>
+          <h3 class="font-bold mb-2">Mentions légales</h3>
+          <p>© 2024 Frame. Tous droits réservés.</p>
+          <p class="mt-2">
+              Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance en l'économie numérique,
+              il est précisé aux utilisateurs du site Frame l'identité des différents intervenants dans le cadre de sa
+              réalisation et de son suivi.
+          </p>
+
+          <h4 class="font-bold mt-4">Éditeur du site :</h4>
+          <p>
+              <strong>Noms :</strong> Andy Mel Biom et Emboulé Noah<br>
+              <strong>Adresses :</strong>  
+              <ul class="list-disc pl-5">
+                  <li>26 Villa Croix Nivert, 75015 Paris</li>
+                  <li>1 Allée des Jacinthes, 91182 Villebon</li>
+              </ul>
+              <strong>Email :</strong> 
+              <a href="mailto:lokuuuaaaa@icloud.com" class="text-blue-400 hover:underline">lokuuuaaaa@icloud.com</a>
+          </p>
+          
+
+          <h4 class="font-bold mt-4">Hébergement :</h4>
+          <p>
+              Ce site est hébergé par <strong>GitHub Pages</strong> <br>
+              Adresse : GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA <br>
+              Site web : <a href="https://pages.github.com" target="_blank" class="text-blue-400 hover:underline">https://pages.github.com</a>
+          </p>
+
+          <h4 class="font-bold mt-4">Propriété intellectuelle :</h4>
+          <p>
+              L’ensemble des contenus présents sur ce site (textes, images, logos, code source, etc.) est protégé par les lois sur la propriété intellectuelle.
+              Toute reproduction, représentation, modification ou adaptation, en tout ou en partie, est strictement interdite sans l’autorisation préalable de l’auteur.
+          </p>
+
+          <h4 class="font-bold mt-4">Responsabilité :</h4>
+          <p>
+              L’éditeur du site ne saurait être tenu responsable des éventuelles erreurs ou omissions présentes sur ce site, ni de l’utilisation qui pourrait être faite des informations diffusées.
+          </p>
+
+          <h4 class="font-bold mt-4">Cookies et Données personnelles :</h4>
+          <p>
+              Ce site ne collecte pas de données personnelles ni n’utilise de cookies à des fins de suivi ou de publicité.
+          </p>
+
+          <h4 class="font-bold mt-4">Contact :</h4>
+          <p>
+              Pour toute question relative aux mentions légales, veuillez me contacter à l’adresse suivante : 
+              <a href="mailto:lokuuuaaaaa@icloud.com" class="text-blue-400 hover:underline">andymelbiom@icloud.com</a>
+          </p>
       </div>
-    </div>
   </div>
+</div>
+<!-- Script pour afficher/masquer les mentions légales -->
+<script>
+  function toggleLegal() {
+      const legalContent = document.getElementById("legalContent");
+      const button = document.getElementById("toggleButton");
+
+      if (legalContent.classList.contains("hidden")) {
+          legalContent.classList.remove("hidden");
+          button.setAttribute("aria-expanded", "true");
+      } else {
+          legalContent.classList.add("hidden");
+          button.setAttribute("aria-expanded", "false");
+      }
+  }
+</script>
+
   
   <script>
     function toggleLegal() {
